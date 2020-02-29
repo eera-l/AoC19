@@ -42,3 +42,4 @@ fil :: [[Char]] -> [[Char]]
 fil []                       = []
 fil (x:xs) | (length xs) > 0 = fil (filter (\x -> (head x) /= (head (head xs))) (x:xs))
            | otherwise       = [x]
+           
