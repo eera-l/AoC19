@@ -19,9 +19,4 @@ calculateCostRe :: Int -> Int
 calculateCostRe num | num' <= 0  = 0
                     | otherwise  = num' + calculateCostRe num'
               where num' = num `div` 3 - 2 
-
-
-
-
-
-
+              
