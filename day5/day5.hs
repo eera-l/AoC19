@@ -1,8 +1,5 @@
 import Data.List.Split
 
-input :: Int
-input = 1
-
 task1 :: FilePath -> IO ()
 task1 f = do numFile <- readFile f
              let nums = [read n :: Int | n <- splitOn "," numFile]
@@ -20,6 +17,16 @@ solve l [] n = case l!!n of
                        solve (replaceAt (l!!(n + 1)) numIn l) [] (n + 2)
                4 -> do putStrLn (show (l!!(l!!(n + 1))))
                        solve l [] (n + 2)
+               5 -> if (l!!(l!!(n + 1))) /= 0 then solve l [] (l!!(l!!(n + 2))) 
+                    else solve l [] (n + 3)
+               6 -> if (l!!(l!!(n + 1))) == 0 then solve l [] (l!!(l!!(n + 2))) 
+                    else solve l [] (n + 3)
+               7 -> if (l!!(l!!(n + 1))) < (l!!(l!!(n + 2))) then 
+                       solve (replaceAt (l!!(n + 3)) 1 l) [] (n + 4) 
+                    else solve (replaceAt (l!!(n + 3)) 0 l) [] (n + 4)
+               8 -> if (l!!(l!!(n + 1))) == (l!!(l!!(n + 2))) then 
+                        solve (replaceAt (l!!(n + 3)) 1 l) [] (n + 4) 
+                    else solve (replaceAt (l!!(n + 3)) 0 l) [] (n + 4)
                99 -> do return l 
                _  -> solve l (readOpcode (l!!n)) n
 solve l op n = case l!!n of                
@@ -29,6 +36,16 @@ solve l op n = case l!!n of
                      2 -> solve (replaceAt (l!!(n + 3)) ((readNum l (op!!1) (n + 1)) * (readNum l (op!!2) (n + 2))) l) [] (n + 4)
                      4 -> do putStrLn (show (readNum l (op!!1) (n + 1)))
                              solve l [] (n + 2)
+                     5 -> if (readNum l (op!!1) (n + 1)) /= 0 then solve l [] (readNum l (op!!2) (n + 2)) 
+                          else solve l [] (n + 3)
+                     6 -> if (readNum l (op!!1) (n + 1)) == 0 then solve l [] (readNum l (op!!2) (n + 2)) 
+                          else solve l [] (n + 3)
+                     7 -> if (readNum l (op!!1) (n + 1)) < (readNum l (op!!2) (n + 2)) then 
+                          solve (replaceAt (l!!(n + 3)) 1 l) [] (n + 4) 
+                          else solve (replaceAt (l!!(n + 3)) 0 l) [] (n + 4)
+                     8 -> if (readNum l (op!!1) (n + 1)) == (readNum l (op!!2) (n + 2)) then 
+                          solve (replaceAt (l!!(n + 3)) 1 l) [] (n + 4) 
+                          else solve (replaceAt (l!!(n + 3)) 0 l) [] (n + 4)
                      _ -> solve l [] (n + 2)
                                       
             
@@ -52,7 +69,11 @@ readOpcode n = do let op = n `mod` 100
                   let s_par = if (n `div` 1000) >= 10 then (n `div` 1000) `mod` 10 else (n `div` 1000)
                   let t_par = if (n `div` 1000) >= 10 then (n `div` 10000) else 0
                   [op, f_par, s_par, t_par]
-                              
                   
-
-
+               
+task2 :: FilePath -> IO ()
+task2 f = do numFile <- readFile f
+             let nums = [read n :: Int | n <- splitOn "," numFile]
+             nums_re <- solve nums [] 0
+             return ()
+                              
