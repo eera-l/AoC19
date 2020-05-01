@@ -2,10 +2,19 @@ import Data.Char(digitToInt)
 import Data.List.Split
 import Data.List
 
+
+width :: Int
+width = 25
+
+
+height :: Int
+height = 6
+
+
 task1 :: FilePath -> IO Int
 task1 f = do digits <- readFile f
              let nums     = map digitToInt digits
-             let fullList = readLayerz (readLinez nums 25) 6
+             let fullList = readLayerz (readLinez nums width) height
              return $ countOneTwoz fullList (head $ returnIndex $ findLeastZeros fullList)
              
              
@@ -39,10 +48,9 @@ countOneTwoz l n      = sum [length (filter (\x -> x == 1) line) | line <- l!!n]
 task2 :: FilePath -> IO ()
 task2 f = do digits <- readFile f
              let nums      = map digitToInt digits
-             let fullList  = transpose $ readLinez nums 150
+             let fullList  = transpose $ readLinez nums (width * height)
              let colorList = [colorize num | num <- fullList]
-             mapM_ print $ readLinez colorList 25
-             return ()             
+             mapM_ print $ readLinez colorList width
 
 
 colorize :: [Int] -> Char
