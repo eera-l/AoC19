@@ -7,6 +7,7 @@ task1 f = do numFile <- readFile f
              return ()
              
 
+-- Jätte fint
 solve :: [Int] -> [Int] -> Int -> IO [Int]
 solve l [] n = case l!!n of 
                1 -> solve (replaceAt (l!!(n + 3)) (calculate (+) n l) l) [] (n + 4)
@@ -48,21 +49,28 @@ solve l op n = case l!!n of
                           else solve (replaceAt (l!!(n + 3)) 0 l) [] (n + 4)
                      _ -> solve l [] (n + 2)
                                       
-            
+
+
+-- Generic calculation function            
 calculate :: (Int -> Int -> Int) -> Int -> [Int] -> Int
 calculate op n l = op (l!!(l!!(n + 1))) (l!!(l!!(n + 2)))  
 
+
+-- The second argument decides the way the number
+-- is read from the list
 readNum :: [Int] -> Int -> Int -> Int
 readNum l op n = case op of
                  0 -> l!!(l!!n)
                  1 -> l!!n
 
 
+-- Replace value at given index in list
 replaceAt :: Int -> Int -> [Int] -> [Int]
 replaceAt n val (x:xs) | n == 0    = val:xs
                        | otherwise = x:replaceAt (n - 1) val xs
                        
-                       
+
+-- Read the given opcode                      
 readOpcode :: Int -> [Int]
 readOpcode n = do let op = n `mod` 100
                   let f_par = (n `div` 100) `mod` 10
