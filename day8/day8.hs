@@ -10,7 +10,7 @@ width = 25
 height :: Int
 height = 6
 
--- 
+ 
 task1 :: FilePath -> IO Int
 task1 f = do digits <- readFile f
              let nums     = map digitToInt digits
