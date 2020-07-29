@@ -43,6 +43,7 @@ findDistance f s mapz = case looked of
                         Nothing -> 0
            where looked = M.lookup f mapz           
 
+
 task2 :: FilePath -> Io Int 
 task2 f = do orbitFile <- readFile f
              let orbitsf = lines orbitFile
