@@ -51,7 +51,7 @@ solve l op n = case l!!n of
                                       
 
 
--- Generic calculation function            
+-- Generic calculation function for readability     
 calculate :: (Int -> Int -> Int) -> Int -> [Int] -> Int
 calculate op n l = op (l!!(l!!(n + 1))) (l!!(l!!(n + 2)))  
 
